@@ -88,6 +88,7 @@
         // ── Scoring ────────────────────────────────────────────────────────
         function calculateResults() {
             const totalScore = state.answers.reduce(function(sum, val) { return sum + (val || 0); }, 0);
+            const maxScore = questions.length * 5;   // ← derived, not hardcoded: 24 questions × 5 = 120
             const pillarScores = {
                 'Learning Infrastructure': 0,
                 'Learning Support': 0,
@@ -105,7 +106,7 @@
             } else {
                 level = { name: 'Systematic Learning Culture', color: 'bg-green-600', description: "Your organization has built meaningful learning capability. Infrastructure enables systematic development. Managers actively support employee growth. Learning is valued organizationally, not just in L&D statements. You're capturing evidence that learning translates to business impact. This positions you ahead of most organizations and creates competitive advantage through faster capability building and stronger talent retention. Direct perspective matters here: high scores indicate strength, not perfection. Even high-performing learning cultures have vulnerabilities. They can erode during leadership transitions, when business pressure intensifies, or when short-term thinking dominates quarterly priorities." };
             }
-            return { totalScore, pillarScores, level };
+            return { totalScore, maxScore,pillarScores, level };
         }
 
         function getPillarLevel(score) {
@@ -334,6 +335,7 @@
                 phone:            state.userData.phone || 'Not provided',
                 submitted_at:     new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST',
                 total_score:      results.totalScore,
+                max_score:         results.maxScore,
                 level:            results.level.name,
                 pillar_scores:    pillarScoresText,
                 answer_breakdown: answerBreakdown,
